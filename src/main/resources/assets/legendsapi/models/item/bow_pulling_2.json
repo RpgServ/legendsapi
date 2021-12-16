@@ -1,0 +1,6 @@
+{
+    "parent": "legendsapi:item/custombow",
+    "textures": {
+        "layer0": "legendsapi:items/bow_pulling_2"
+    }
+}
