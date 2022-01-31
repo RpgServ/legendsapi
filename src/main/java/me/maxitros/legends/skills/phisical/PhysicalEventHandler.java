@@ -2,6 +2,9 @@ package me.maxitros.legends.skills.phisical;
 
 import me.maxitros.legends.ClientData;
 import me.maxitros.legends.api.SkillsEnum;
+import me.maxitros.legends.api.weapon.IChopping;
+import me.maxitros.legends.api.weapon.ICrushing;
+import me.maxitros.legends.api.weapon.IStabbing;
 import me.maxitros.legends.capabilities.*;
 import me.maxitros.legends.capabilities.providers.SkillCooldownProvider;
 import me.maxitros.legends.capabilities.providers.SkillsDataProvider;
@@ -15,6 +18,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -39,30 +43,33 @@ public class PhysicalEventHandler {
             ISkillsData skillsData = player.getCapability(SkillsDataProvider.SKILLS_CAP, null);
             ISkillsTargetsCount targetsCount  = player.getCapability(SkillsTargetsProvider.SKILLS_TARGETS_COUNT_CAPABILITY, null);
             ISkillCooldown cooldown  = player.getCapability(SkillCooldownProvider.SKILLSCOOLDOWN_CAP, null);
-            ProccedSkill(skillsData, targetsCount, player, target, SkillsEnum.Skill_Physically_Cut_Swordsman, 5,
-                    1, PotionRegistry.StabbingWoundPotion,5);
-            ProccedSkill(skillsData, targetsCount, player, target, SkillsEnum.Skill_Physically_Cut_Kendo, 4,
-                    1, PotionRegistry.IncisionPotion,3);
-            ProccedCooldownSkill(skillsData, cooldown, player, target, SkillsEnum.Skill_Physically_Cut_Witcher,
-                    1f,0.1f,(byte) 10,(byte)1);
-            ProccedSkill(skillsData, targetsCount, player, target, SkillsEnum.Skill_Physically_Cut_Samurai, 3,
-                    1, PotionRegistry.HackedPotion,2);
-            ProccedCooldownSkill(skillsData, cooldown, player, target, SkillsEnum.Skill_Physically_Cut_Musketeer,
-                    2f,0.1f,(byte) 10,(byte)1);
-
-
-            ProccedSkill(skillsData, targetsCount, player, target, SkillsEnum.Skill_Physically_Fraction_Blacksmith, 5,
-                    1, PotionRegistry.CrushedWoundPotion,1);
-            ProccedCooldownEffectPositiveSkill(skillsData, cooldown, player, target, SkillsEnum.Skill_Physically_Fraction_Ambal, (byte) 10,
-                    (byte) 0, 5,1, PotionRegistry.AmbalPotion);
-            ProccedCooldownAndPotionSkill(skillsData, targetsCount, cooldown, player, target, SkillsEnum.Skill_Physically_Fraction_Bandit,
-                    0f,0f,(byte) 40,(byte)2, 10,
-                    1, PotionRegistry.StunningPotion,1);
-            ProccedCooldownAndPotionSkill(skillsData, targetsCount, cooldown, player, target, SkillsEnum.Skill_Physically_Fraction_Hooligan,
-                    0f,0f,(byte) 15,(byte)2, 10,
-                    1, PotionRegistry.RepulsedPotion,1);
-            ProccedCooldownEffectPositiveSkill(skillsData, cooldown, player, target, SkillsEnum.Skill_Physically_Fraction_Monk, (byte) 60,
-                    (byte) 2, 10,0, PotionRegistry.MonkPotion);
+            Item helded = player.getActiveItemStack().getItem();
+            if(helded instanceof ICrushing || helded instanceof IStabbing) {
+                ProccedSkill(skillsData, targetsCount, player, target, SkillsEnum.Skill_Physically_Cut_Swordsman, 5,
+                        1, PotionRegistry.StabbingWoundPotion, 5);
+                ProccedSkill(skillsData, targetsCount, player, target, SkillsEnum.Skill_Physically_Cut_Kendo, 4,
+                        1, PotionRegistry.IncisionPotion, 3);
+                ProccedCooldownSkill(skillsData, cooldown, player, target, SkillsEnum.Skill_Physically_Cut_Witcher,
+                        1f, 0.1f, (byte) 10, (byte) 1);
+                ProccedSkill(skillsData, targetsCount, player, target, SkillsEnum.Skill_Physically_Cut_Samurai, 3,
+                        1, PotionRegistry.HackedPotion, 2);
+                ProccedCooldownSkill(skillsData, cooldown, player, target, SkillsEnum.Skill_Physically_Cut_Musketeer,
+                        2f, 0.1f, (byte) 10, (byte) 1);
+            }
+            if(helded instanceof IChopping) {
+                ProccedSkill(skillsData, targetsCount, player, target, SkillsEnum.Skill_Physically_Fraction_Blacksmith, 5,
+                        1, PotionRegistry.CrushedWoundPotion, 1);
+                ProccedCooldownEffectPositiveSkill(skillsData, cooldown, player, target, SkillsEnum.Skill_Physically_Fraction_Ambal, (byte) 10,
+                        (byte) 0, 5, 1, PotionRegistry.AmbalPotion);
+                ProccedCooldownAndPotionSkill(skillsData, targetsCount, cooldown, player, target, SkillsEnum.Skill_Physically_Fraction_Bandit,
+                        0f, 0f, (byte) 40, (byte) 2, 10,
+                        1, PotionRegistry.StunningPotion, 1);
+                ProccedCooldownAndPotionSkill(skillsData, targetsCount, cooldown, player, target, SkillsEnum.Skill_Physically_Fraction_Hooligan,
+                        0f, 0f, (byte) 15, (byte) 2, 10,
+                        1, PotionRegistry.RepulsedPotion, 1);
+                ProccedCooldownEffectPositiveSkill(skillsData, cooldown, player, target, SkillsEnum.Skill_Physically_Fraction_Monk, (byte) 60,
+                        (byte) 2, 10, 0, PotionRegistry.MonkPotion);
+            }
         }
     }
     @SubscribeEvent

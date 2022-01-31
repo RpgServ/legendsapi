@@ -1,5 +1,6 @@
 package me.maxitros.legends.api;
 
+import me.maxitros.legends.api.weapon.IStabbing;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
