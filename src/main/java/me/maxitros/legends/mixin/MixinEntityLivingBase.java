@@ -9,6 +9,8 @@ import me.maxitros.legends.capabilities.providers.ExpStatsProvider;
 import me.maxitros.legends.capabilities.providers.SkillsDataProvider;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,8 +34,15 @@ public abstract class MixinEntityLivingBase extends MixinEntity{
     public final void getMaxHealth(CallbackInfoReturnable<Float> cir)
     {
         if(this.isPlayer()) {
-            IExpStats expStats = this.getCapability(ExpStatsProvider.EXP_STATS_CAPABILITY_CAP, null);
-            cir.setReturnValue((float) (20+(expStats.GetCurrentLvl()-1)));
+            if(!this.world.isRemote)
+            {
+                IExpStats expStats = this.getCapability(ExpStatsProvider.EXP_STATS_CAPABILITY_CAP, null);
+                cir.setReturnValue((float) (20+(expStats.GetCurrentLvl()-1)));
+            }
+            else
+            {
+                cir.setReturnValue((float) (20+(ClientData.ClientCurrentLvl-1)));
+            }
         }
     }
 

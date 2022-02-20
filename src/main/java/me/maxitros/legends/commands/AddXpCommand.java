@@ -27,10 +27,11 @@ public class AddXpCommand extends CommandBase {
     public void execute(MinecraftServer minecraftServer, ICommandSender iCommandSender, String[] strings) throws CommandException {
         if(iCommandSender.canUseCommand(2, "") && strings.length>=2)
         {
-            EntityPlayerMP player = minecraftServer.getPlayerList().getPlayerByUsername(strings[1]);
+            EntityPlayerMP player = minecraftServer.getPlayerList().getPlayerByUsername(strings[0]);
             if(player!=null)
             {
                 try {
+                    System.out.println("here 1");
                     IExpStats data = player.getCapability(ExpStatsProvider.EXP_STATS_CAPABILITY_CAP, null);
                     data.AddXP(Float.parseFloat(strings[1]));
                     CapaListener.SyncCapa(CapaListener.CapaType.ExpStats, player);
