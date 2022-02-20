@@ -1,3 +1,3 @@
 # Commands
 
-/addxplvl <player> <xp> - add <xp> xp tp player <player>
+/addxplvl [player] [xp] - add [xp] xp to player [player]
