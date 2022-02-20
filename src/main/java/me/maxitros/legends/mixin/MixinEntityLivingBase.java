@@ -2,24 +2,19 @@ package me.maxitros.legends.mixin;
 
 import me.maxitros.legends.ClientData;
 import me.maxitros.legends.api.SkillsEnum;
+import me.maxitros.legends.capabilities.IExpStats;
 import me.maxitros.legends.capabilities.ISkillsData;
 import me.maxitros.legends.capabilities.SkillsData;
+import me.maxitros.legends.capabilities.providers.ExpStatsProvider;
 import me.maxitros.legends.capabilities.providers.SkillsDataProvider;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemShield;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import org.lwjgl.Sys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
@@ -32,6 +27,15 @@ public abstract class MixinEntityLivingBase extends MixinEntity{
     @Shadow public abstract boolean isServerWorld();
 
     @Shadow @Nullable public abstract <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing);
+
+    @Inject(method = "getMaxHealth", at = @At("HEAD"), cancellable = true)
+    public final void getMaxHealth(CallbackInfoReturnable<Float> cir)
+    {
+        if(this.isPlayer()) {
+            IExpStats expStats = this.getCapability(ExpStatsProvider.EXP_STATS_CAPABILITY_CAP, null);
+            cir.setReturnValue((float) (20+(expStats.GetCurrentLvl()-1)));
+        }
+    }
 
     @Inject(method = "getJumpUpwardsMotion", at = @At("HEAD"), cancellable = true)
     protected void getJumpUpwardsMotion(CallbackInfoReturnable<Float> cir)

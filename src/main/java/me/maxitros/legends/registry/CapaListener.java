@@ -44,6 +44,9 @@ public class CapaListener {
 
             ISkillsTargetsCount count = playerMP.getCapability(SkillsTargetsProvider.SKILLS_TARGETS_COUNT_CAPABILITY, EnumFacing.UP);
             count.setTargetsCount(new byte[SkillsEnum.Count]);
+
+            IExpStats expStats  = playerMP.getCapability(ExpStatsProvider.EXP_STATS_CAPABILITY_CAP, EnumFacing.UP);
+            expStats.SetPlayer(playerMP.getName());
             SyncAllData(playerMP);
         }
 

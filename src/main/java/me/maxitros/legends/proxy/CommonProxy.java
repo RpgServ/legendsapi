@@ -1,6 +1,7 @@
 package me.maxitros.legends.proxy;
 
 import me.maxitros.legends.Legends;
+import me.maxitros.legends.api.LvlXPData;
 import me.maxitros.legends.api.SkillsEnum;
 import me.maxitros.legends.capabilities.*;
 import me.maxitros.legends.effects.PotionRegistry;
@@ -63,7 +64,7 @@ public class CommonProxy {
                         ((ExpStats)instance).SetCurrentLvl(compound.getInteger("lvl"));
                     }
                 },
-                () -> new ExpStats(1, 0, 10));
+                () -> new ExpStats(0, 0, LvlXPData.GetXpToNextLvl(1)));
         CapabilityManager.INSTANCE.register(ISkillsData.class, new Capability.IStorage<ISkillsData>()
                 {
                     @Override

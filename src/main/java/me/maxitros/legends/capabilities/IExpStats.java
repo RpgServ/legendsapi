@@ -10,4 +10,7 @@ public interface IExpStats {
     public float GetCurrentXP();
     public void SetCurrentLvl(int lvl);
     public int GetCurrentLvl();
+    public int GetSkillPoints();
+    public void SetSkillPoints(int points);
+    public void SetPlayer(String player);
 }

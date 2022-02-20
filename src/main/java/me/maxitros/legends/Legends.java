@@ -1,6 +1,7 @@
 package me.maxitros.legends;
 
 import me.maxitros.legends.capabilities.CapabilityHandler;
+import me.maxitros.legends.commands.AddXpCommand;
 import me.maxitros.legends.commands.SetDamageCmd;
 import me.maxitros.legends.commands.SetLvlCmd;
 import me.maxitros.legends.commands.SetSkillCmd;
@@ -85,6 +86,7 @@ public class Legends {
         event.registerServerCommand(new SetDamageCmd());
         event.registerServerCommand(new SetSkillCmd());
         event.registerServerCommand(new SetLvlCmd());
+        event.registerServerCommand(new AddXpCommand());
     }
 
 }
