@@ -8,7 +8,7 @@ public class MagicStats implements IMagicStats{
     public MagicStats(float currentMana, float maxMana)
     {
         this.currentMana = currentMana;
-        this.maxMana = maxMana;
+        this.maxMana = 20;
     }
 
     public void SetMaxMana(float points, EntityPlayerMP playerMP) {

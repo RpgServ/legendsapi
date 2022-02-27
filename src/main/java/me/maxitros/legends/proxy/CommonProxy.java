@@ -43,7 +43,7 @@ public class CommonProxy {
                         ((MagicStats)instance).SetMaxMana(((NBTTagCompound)nbt).getFloat("maxMana"));
                     }
                 },
-                () -> new MagicStats(100,100));
+                () -> new MagicStats(20,20));
         CapabilityManager.INSTANCE.register(IExpStats.class, new Capability.IStorage<IExpStats>(){
                     @Override
                     public NBTBase writeNBT(Capability<IExpStats> capability, IExpStats instance, EnumFacing side)
