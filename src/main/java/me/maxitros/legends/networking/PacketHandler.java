@@ -36,6 +36,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(SpawnTrianglePartPacket.Handler.class, SpawnTrianglePartPacket.class, nextID(), Side.CLIENT);
         INSTANCE.registerMessage(SyncIceCube.Handler.class, SyncIceCube.class, nextID(), Side.CLIENT);
         INSTANCE.registerMessage(SyncMine.Handler.class, SyncMine.class, nextID(), Side.CLIENT);
-
+        INSTANCE.registerMessage(SyncMobData.Handler.class, SyncMobData.class, nextID(), Side.CLIENT);
+        INSTANCE.registerMessage(RequestSyncMobData.Handler.class, RequestSyncMobData.class, nextID(), Side.SERVER);
     }
 }

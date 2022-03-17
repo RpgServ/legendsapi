@@ -119,6 +119,27 @@ public class CommonProxy {
                     }
                 },
                 () -> new SkillsTargetsCount(new byte[SkillsEnum.Count]));
+        CapabilityManager.INSTANCE.register(IMobLvl.class, new Capability.IStorage<IMobLvl>(){
+                    @Override
+                    public NBTBase writeNBT(Capability<IMobLvl> capability, IMobLvl instance, EnumFacing side)
+                    {
+                        NBTTagCompound compound = new NBTTagCompound();
+                        compound.setInteger("lvl", instance.GetLvl());
+                        compound.setFloat("hp", instance.GetHp());
+                        compound.setBoolean("isDef", instance.IsDefault());
+                        return compound;
+                    }
+
+                    @Override
+                    public void readNBT(Capability<IMobLvl> capability, IMobLvl instance, EnumFacing side, NBTBase nbt)
+                    {
+                        NBTTagCompound compound = (NBTTagCompound) nbt;
+                        ((MobLvl)instance).SetLvl(compound.getInteger("lvl"));
+                        ((MobLvl)instance).SetHp(compound.getFloat("hp"));
+                        ((MobLvl)instance).SetDefault(compound.getBoolean("isDef"));
+                    }
+                },
+                () -> new MobLvl(1, 10, true));
         PacketHandler.registerMessages(Legends.modId);
         PotionRegistry.registerPotions();
         ItemRegistry.RegisterItems();

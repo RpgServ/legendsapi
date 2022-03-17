@@ -28,7 +28,6 @@ public class ExpStats implements IExpStats{
     @Override
     public void AddXP(float xp) {
         currentXP += xp;
-        System.out.println("here 2");
         while (currentXP >= nextLvlXP && lvl<=70)
         {
             lvl++;
